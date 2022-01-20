@@ -1,0 +1,9 @@
+on: [push]
+
+jobs:
+  testsuite:
+    name: Run ugit test suite
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: python tests/core.py
