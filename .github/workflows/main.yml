@@ -6,4 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - run: echo "export PATH=$PATH:$HOME/.local/bin" >>$HOME/.bashrc
+      - run: source $HOME/.bashrc
+      - run: python3 setup.py develop --user
       - run: python tests/core.py
