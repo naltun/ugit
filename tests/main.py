@@ -38,7 +38,10 @@ class UgitCore(unittest.TestCase):
             f.write(body)
         obj_id = run(['ugit', 'hash-object', tmp.name], capture_output=True)
         # e.g. obj_id == b'0a0a9f2a6772942557ab5355d76af442f8f65e01\n'
-        self.assertTrue(obj_id.stdout.decode().rstrip() in os.listdir(f'{gettempdir()}/{GIT_DIR}/objects'))
+        self.assertTrue(
+            obj_id.stdout.decode().rstrip()
+            in os.listdir(f'{gettempdir()}/{GIT_DIR}/objects')
+        )
 
 
 if __name__ == '__main__':
