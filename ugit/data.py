@@ -13,7 +13,6 @@ def init():
     '''
     Helper function to create the `ugit' directory. This initializes a `ugit' repository.
     '''
-    os.makedirs(GIT_DIR)
     os.makedirs(f'{GIT_DIR}/objects')
 
 
