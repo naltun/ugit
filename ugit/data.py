@@ -51,8 +51,8 @@ def get_object(oid, expected='blob') -> bytes:
     with open(f'{GIT_DIR}/objects/{oid}', 'rb') as f:
         obj = f.read()
 
-    obj_type, _, content = obj.partition(NULL_BYTE)
-    obj_type = obj_type.decode()
+    type_, _, content = obj.partition(NULL_BYTE)
+    obj_type = type_.decode()
 
     if expected and obj_type != expected:
         raise ObjectTypeError(f'Expected {expected}, got {obj_type}')
