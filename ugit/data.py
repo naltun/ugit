@@ -33,7 +33,7 @@ def hash_object(data, obj_type='blob') -> str:
                       |      |
                       |      |Object Content
                       |      ||           |
-                      |______||___________|
+                      |      ||           |
                       v      vv           v
                     b'blob\x00Hello, World!'
     '''
