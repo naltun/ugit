@@ -52,7 +52,9 @@ class UgitCore(unittest.TestCase):
     def _test_cat_file(self):
         body = 'Hello, World!'
         # e.g. resp == b'Hello, World!', so we must decode it.
-        resp = run(['ugit', 'cat-file', self.object_id], capture_output=True).stdout.decode()
+        resp = run(
+            ['ugit', 'cat-file', self.object_id], capture_output=True
+        ).stdout.decode()
         self.assertTrue(body == resp)
 
 
