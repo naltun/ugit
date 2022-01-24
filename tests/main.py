@@ -1,10 +1,10 @@
 import logging
 import os
-import random
 import sys
 import unittest
 
 from pathlib import Path
+from random import getrandbits
 from shutil import rmtree
 from subprocess import DEVNULL, STDOUT, run
 from tempfile import NamedTemporaryFile, gettempdir
@@ -16,7 +16,7 @@ from ugit.data import GIT_DIR
 
 class UgitCore(unittest.TestCase):
     def setUp(self):
-        self.file_body = f'Random Bytes: {random.getrandbits(50_000)}'
+        self.file_body = str(getrandbits(50_000))
         self.object_id = None
         self.tmp_path = gettempdir()
         self.objects_path = f'{self.tmp_path}/{GIT_DIR}/objects'
