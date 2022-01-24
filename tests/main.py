@@ -30,6 +30,7 @@ class UgitCore(unittest.TestCase):
         '''
         self._test_init()
         self._test_hash_object()
+        self._test_cat_file()
 
     def _test_init(self):
         run(['ugit', 'init'], stdout=DEVNULL, stderr=STDOUT)
@@ -47,6 +48,12 @@ class UgitCore(unittest.TestCase):
         self.assertTrue(
             self.object_id in os.listdir(f'{gettempdir()}/{GIT_DIR}/objects')
         )
+
+    def _test_cat_file(self):
+        body = 'Hello, World!'
+        # e.g. resp == b'Hello, World!', so we must decode it.
+        resp = run(['ugit', 'cat-file', self.object_id], capture_output=True).stdout.decode()
+        self.assertTrue(body == resp)
 
 
 if __name__ == '__main__':

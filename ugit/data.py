@@ -24,3 +24,11 @@ def hash_object(data):
     with open(f'{GIT_DIR}/objects/{oid}', 'wb') as f:
         f.write(data)
     return oid
+
+
+def get_object(oid):
+    '''
+    Print the contents of a file, given the object ID.
+    '''
+    with open(f'{GIT_DIR}/objects/{oid}', 'rb') as f:
+        return f.read()
