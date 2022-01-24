@@ -9,14 +9,14 @@ import os
 GIT_DIR = '.ugit'
 
 
-def init():
+def init() -> None:
     '''
     Helper function to create the `ugit' directory. This initializes a `ugit' repository.
     '''
     os.makedirs(f'{GIT_DIR}/objects')
 
 
-def hash_object(data):
+def hash_object(data) -> str:
     '''
     Helper function to create content-addressable storage for our files.
     '''
@@ -26,7 +26,7 @@ def hash_object(data):
     return oid
 
 
-def get_object(oid):
+def get_object(oid) -> bytes:
     '''
     Print the contents of a file, given the object ID.
     '''

@@ -8,7 +8,7 @@ import sys
 from . import data
 
 
-def main():
+def main() -> None:
     '''
     Entrypoint to `ugit'.
     '''
@@ -16,7 +16,7 @@ def main():
     args.func(args)
 
 
-def parse_args():
+def parse_args() -> argparse.Namespace:
     '''
     Parse user-supplied arguments to `ugit'.
     '''
@@ -39,7 +39,7 @@ def parse_args():
     return parser.parse_args()
 
 
-def init(args):
+def init(args) -> None:
     '''
     Frontend to initialize a `ugit' repository.
     '''
@@ -47,7 +47,7 @@ def init(args):
     print(f'Initialized empty ugit repository in {os.getcwd()}/{data.GIT_DIR}')
 
 
-def hash_object(args):
+def hash_object(args) -> None:
     '''
     Frontend to create a content-addressable storage of a file.
     '''
@@ -55,7 +55,7 @@ def hash_object(args):
         print(data.hash_object(f.read()))
 
 
-def cat_file(args):
+def cat_file(args) -> None:
     '''
     Frontened to print the contents of a stored file.
     '''
