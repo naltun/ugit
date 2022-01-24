@@ -1,3 +1,4 @@
+import logging
 import os
 import sys
 import unittest
@@ -17,6 +18,7 @@ class UgitCore(unittest.TestCase):
         self.object_id = None
         self.tmp_path = gettempdir()
         self.objects_path = f'{self.tmp_path}/{GIT_DIR}/objects'
+        self.test_count = 0
 
         os.chdir(self.tmp_path)
         if Path(GIT_DIR).is_dir():
@@ -32,11 +34,19 @@ class UgitCore(unittest.TestCase):
         self._test_hash_object()
         self._test_cat_file()
 
+    def _increment_test_count(self):
+        self.test_count += 1
+        return self.test_count
+
     def _test_init(self):
+        logging.debug(f'{self._increment_test_count()} Running sub-test:')
+
         run(['ugit', 'init'], stdout=DEVNULL, stderr=STDOUT)
         self.assertTrue(GIT_DIR in os.listdir())
 
     def _test_hash_object(self):
+        logging.debug(f'{self._increment_test_count()} Running sub-test:')
+
         tmp = NamedTemporaryFile()
         with open(tmp.name, 'w') as f:
             body = 'Hello, World!'
@@ -50,6 +60,8 @@ class UgitCore(unittest.TestCase):
         )
 
     def _test_cat_file(self):
+        logging.debug(f'{self._increment_test_count()} Running sub-test:')
+
         body = 'Hello, World!'
         # e.g. resp == b'Hello, World!', so we must decode it.
         resp = run(
@@ -59,4 +71,5 @@ class UgitCore(unittest.TestCase):
 
 
 if __name__ == '__main__':
+    logging.basicConfig(level=logging.DEBUG, format='%(message)s %(funcName)s')
     unittest.main()
