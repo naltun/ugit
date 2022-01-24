@@ -56,9 +56,7 @@ class UgitCore(unittest.TestCase):
         # resp will be a bytestring and end in a newline character, so let's decode the value and
         # remove the trailing newline.
         self.object_id = resp.decode().rstrip()
-        self.assertTrue(
-            self.object_id in os.listdir(f'{self.tmp_path}/{GIT_DIR}/objects')
-        )
+        self.assertTrue(self.object_id in os.listdir(self.objects_path))
 
     def _test_cat_file(self):
         logging.debug(f'{self._increment_test_count()} Running sub-test:')
