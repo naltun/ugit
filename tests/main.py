@@ -56,7 +56,7 @@ class UgitCore(unittest.TestCase):
         # newline character.
         self.object_id = resp.decode().rstrip()
         self.assertTrue(
-            self.object_id in os.listdir(f'{gettempdir()}/{GIT_DIR}/objects')
+            self.object_id in os.listdir(f'{self.tmp_path}/{GIT_DIR}/objects')
         )
 
     def _test_cat_file(self):
