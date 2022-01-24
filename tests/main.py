@@ -1,5 +1,6 @@
 import logging
 import os
+import random
 import sys
 import unittest
 
@@ -15,7 +16,7 @@ from ugit.data import GIT_DIR
 
 class UgitCore(unittest.TestCase):
     def setUp(self):
-        self.file_body = 'Hello, World!'
+        self.file_body = f'Random Bytes: {random.randbytes(10_000)}'
         self.object_id = None
         self.tmp_path = gettempdir()
         self.objects_path = f'{self.tmp_path}/{GIT_DIR}/objects'
@@ -52,8 +53,8 @@ class UgitCore(unittest.TestCase):
         with open(tmp.name, 'w') as f:
             f.write(self.file_body)
         resp = run(['ugit', 'hash-object', tmp.name], capture_output=True).stdout
-        # e.g. resp == b'0a0a9f2a6772942557ab5355d76af442f8f65e01\n', so let's decode and remove the
-        # newline character.
+        # resp will be a bytestring and end in a newline character, so let's decode the value and
+        # remove the trailing newline.
         self.object_id = resp.decode().rstrip()
         self.assertTrue(
             self.object_id in os.listdir(f'{self.tmp_path}/{GIT_DIR}/objects')
@@ -62,7 +63,7 @@ class UgitCore(unittest.TestCase):
     def _test_cat_file(self):
         logging.debug(f'{self._increment_test_count()} Running sub-test:')
 
-        # e.g. resp == b'Hello, World!', so we must decode it.
+        # resp will be a bytestring, so we must decode it.
         resp = run(
             ['ugit', 'cat-file', self.object_id], capture_output=True
         ).stdout.decode()
