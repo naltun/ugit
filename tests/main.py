@@ -14,7 +14,11 @@ from ugit.data import GIT_DIR
 
 class UgitCore(unittest.TestCase):
     def setUp(self):
-        os.chdir(gettempdir())
+        self.object_id = None
+        self.tmp_path = gettempdir()
+        self.objects_path = f'{self.tmp_path}/{GIT_DIR}/objects'
+
+        os.chdir(self.tmp_path)
         if Path(GIT_DIR).is_dir():
             rmtree(GIT_DIR)
 
@@ -36,11 +40,12 @@ class UgitCore(unittest.TestCase):
         with open(tmp.name, 'w') as f:
             body = 'Hello, World!'
             f.write(body)
-        obj_id = run(['ugit', 'hash-object', tmp.name], capture_output=True)
-        # e.g. obj_id == b'0a0a9f2a6772942557ab5355d76af442f8f65e01\n'
+        resp = run(['ugit', 'hash-object', tmp.name], capture_output=True).stdout
+        # e.g. resp == b'0a0a9f2a6772942557ab5355d76af442f8f65e01\n', so let's decode and remove the
+        # newline character.
+        self.object_id = resp.decode().rstrip()
         self.assertTrue(
-            obj_id.stdout.decode().rstrip()
-            in os.listdir(f'{gettempdir()}/{GIT_DIR}/objects')
+            self.object_id in os.listdir(f'{gettempdir()}/{GIT_DIR}/objects')
         )
 
 
