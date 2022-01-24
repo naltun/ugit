@@ -16,7 +16,7 @@ from ugit.data import GIT_DIR
 
 class UgitCore(unittest.TestCase):
     def setUp(self):
-        self.file_body = f'Random Bytes: {random.randbytes(10_000)}'
+        self.file_body = f'Random Bytes: {random.getrandbits(50_000)}'
         self.object_id = None
         self.tmp_path = gettempdir()
         self.objects_path = f'{self.tmp_path}/{GIT_DIR}/objects'
