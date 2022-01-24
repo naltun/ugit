@@ -15,6 +15,7 @@ from ugit.data import GIT_DIR
 
 class UgitCore(unittest.TestCase):
     def setUp(self):
+        self.file_body = 'Hello, World!'
         self.object_id = None
         self.tmp_path = gettempdir()
         self.objects_path = f'{self.tmp_path}/{GIT_DIR}/objects'
@@ -49,8 +50,7 @@ class UgitCore(unittest.TestCase):
 
         tmp = NamedTemporaryFile()
         with open(tmp.name, 'w') as f:
-            body = 'Hello, World!'
-            f.write(body)
+            f.write(self.file_body)
         resp = run(['ugit', 'hash-object', tmp.name], capture_output=True).stdout
         # e.g. resp == b'0a0a9f2a6772942557ab5355d76af442f8f65e01\n', so let's decode and remove the
         # newline character.
@@ -62,12 +62,11 @@ class UgitCore(unittest.TestCase):
     def _test_cat_file(self):
         logging.debug(f'{self._increment_test_count()} Running sub-test:')
 
-        body = 'Hello, World!'
         # e.g. resp == b'Hello, World!', so we must decode it.
         resp = run(
             ['ugit', 'cat-file', self.object_id], capture_output=True
         ).stdout.decode()
-        self.assertTrue(body == resp)
+        self.assertTrue(self.file_body == resp)
 
 
 if __name__ == '__main__':
