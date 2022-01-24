@@ -60,4 +60,4 @@ def cat_file(args) -> None:
     Frontened to print the contents of a stored file.
     '''
     sys.stdout.flush()
-    sys.stdout.buffer.write(data.get_object(args.object))
+    sys.stdout.buffer.write(data.get_object(args.object, expected=None))
